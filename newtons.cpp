@@ -48,6 +48,16 @@ complex<double> df(complex<double> x) {
 	return (real(20) * pow(x, 19)) + (real(10) * pow(x, 9)) - (real(5) * pow(x, 4)) - (real(2) * x);
 }
 
+Edited function from class use negaitve values too-------------------------------
+complex<double> f(complex<double> x) {
+	return ((pow(x, 4)) - (pow(x, 3)) + (pow(x, 2)) - real(1));
+
+}
+
+complex<double> df(complex<double> x) {
+	return ((real(4) * pow(x, 3)) - (real(3) * pow(x, 2)) + (real(2) * x));
+}
+
 
 Supposed mandelbrot function: requires some program restructuring... -------------
 complex<double> f(complex<double> x) {
@@ -71,7 +81,7 @@ public:
 	~Pixel() {}
 
 	void iterate(sf::Image& image) {
-		z = newtonsMethod(10000);
+		z = newtonsMethod(100000);
 		color = sf::Color(count * 6, count * 8, count * 12);
 		image.setPixel(position[0], position[1], color);
 	}
@@ -99,12 +109,12 @@ private:
 	}
 
 	complex<double> f(complex<double> x) {
-		return (pow(x, 100) - real(1));
+		return ((pow(x, 4)) - (real(3) * pow(x, 3)) - (pow(x, 2)) + real(1));
 
 	}
 
 	complex<double> df(complex<double> x) {
-		return ((real(100) * pow(x, 99)));
+		return ((real(4) * pow(x, 3)) - (real(9) * pow(x, 2)) - (real(2) * x));
 	}
 };
 
@@ -116,8 +126,8 @@ void fill_array(vector<Pixel*>& pixels, long double scale, int width, int height
 	long double verticalStart;
 	long double verticalEnd;
 	long double origin[2] = { (width / 2), (height / 2) };
-	long double scaleStart = (-2 / scale);
-	long double scaleEnd = (2 / scale);
+	long double scaleStart = (-100000000000 / scale);
+	long double scaleEnd = (100000000000 / scale);
 	long double horizontalSize = (width / (abs(scaleStart) + abs(scaleEnd)));
 	long double verticalSize = (height / (abs(scaleStart) + abs(scaleEnd)));
 	long double horizontalRes = (abs(scaleStart) + abs(scaleEnd)) / width * 1;
@@ -178,12 +188,12 @@ int main() {
 
 	//VARIABLES-------------------------------------------------------------
 	sf::Color bgColor = sf::Color(0, 0, 0);
-	int zooms = 0; //max 44 before error shows up, hopefully a future fix
+	int zooms = 0; //NO ERROR????
 	long double scale = pow(2, zooms);
 
 	sf::Event event;
 	vector<thread> active_threads;
-	int max_threads = 12;
+	int max_threads = 16;
 	sf::Image image;
 	image.create(window.getSize().x, window.getSize().y, bgColor);
 	sf::Texture texture;
